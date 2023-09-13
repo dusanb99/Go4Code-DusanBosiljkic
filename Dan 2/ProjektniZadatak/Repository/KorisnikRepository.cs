@@ -1,6 +1,7 @@
-﻿using ProjektniZadatak.Controllers.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjektniZadatak.Controllers.Model;
 
-namespace ProjektniZadatak
+namespace ProjektniZadatak.Repository
 {
     public interface IKorisnikRepository
     {
@@ -38,7 +39,8 @@ namespace ProjektniZadatak
 
         public void Update(Korisnik user)
         {
-            _context.Korisnici.Update(user);
+            _context.Korisnici.Entry(user).State = EntityState.Modified;
+            //ovo gore je dosta cistije, update ako entitet ne postoji pokusa da ga unese..  _context.Korisnici.Update(user);
             _context.SaveChanges();
         }
 

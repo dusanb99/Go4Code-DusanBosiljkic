@@ -1,6 +1,6 @@
 ﻿using ProjektniZadatak.Models;
 
-namespace ProjektniZadatak
+namespace ProjektniZadatak.Repository
 {
     public interface IObjavaRepository
     {
@@ -36,19 +36,19 @@ namespace ProjektniZadatak
             return _context.Objave.ToList();
         }
 
-        public void Create (Objava objava)
+        public void Create(Objava objava)
         {
             _context.Objave.Add(objava);
             _context.SaveChanges();
         }
 
-        public void Delete (Objava objava)
-        {  
+        public void Delete(Objava objava)
+        {
             _context?.Objave.Remove(objava);
             _context.SaveChanges();
         }
 
-        public void Update (Objava objava)
+        public void Update(Objava objava)
         {
             _context.Objave.Update(objava);
             _context.SaveChanges();

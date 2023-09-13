@@ -1,6 +1,6 @@
 ﻿using ProjektniZadatak.Models;
 
-namespace ProjektniZadatak
+namespace ProjektniZadatak.Repository
 {
     public interface IKomentarRepository
     {
@@ -8,30 +8,30 @@ namespace ProjektniZadatak
 
         IEnumerable<Komentar> getAll();
 
-        void Create (Komentar komentar);
+        void Create(Komentar komentar);
 
-        void Update (Komentar komentar);
+        void Update(Komentar komentar);
 
-        void Delete (Komentar komentar);
+        void Delete(Komentar komentar);
 
 
     }
 
-    public class KomentarRepository: IKomentarRepository
+    public class KomentarRepository : IKomentarRepository
     {
         private readonly DrustvenaMrezaDbContext _context;
 
-        public KomentarRepository (DrustvenaMrezaDbContext context)
+        public KomentarRepository(DrustvenaMrezaDbContext context)
         {
             _context = context;
         }
 
         public IEnumerable<Komentar> getAll()
         {
-           return _context.Komentari.ToList();
+            return _context.Komentari.ToList();
         }
 
-        public Komentar getById (int id)
+        public Komentar getById(int id)
         {
             return _context.Komentari.Find(id);
         }
