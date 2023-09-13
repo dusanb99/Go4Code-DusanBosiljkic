@@ -9,7 +9,7 @@
 
         public int objavaId { get; set; }
 
-        public Objava PovezanaObjava { get; set; }
+        public Models.Objava PovezanaObjava { get; set; }
 
 
     }

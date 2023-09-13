@@ -8,8 +8,8 @@ namespace ProjektniZadatak.Models.DTO
 
         public string ime { get; set; }
 
-        public List<Objava> Objave {  get; set; }
+        public List<Models.Objava> Objave {  get; set; }
 
-        public List<Korisnik> praceniKorisnici {  get; set; }
+        public List<Controllers.Model.Korisnik> praceniKorisnici {  get; set; }
     }
 }

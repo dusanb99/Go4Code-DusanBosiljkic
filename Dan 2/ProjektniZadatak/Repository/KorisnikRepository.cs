@@ -1,34 +1,39 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ProjektniZadatak.Controllers.Model;
+using ProjektniZadatak.Models.DTO;
 
 namespace ProjektniZadatak.Repository
 {
-    public interface IKorisnikRepository
-    {
-        Korisnik GetById(int id);
-        IEnumerable<Korisnik> GetAll();
-        void Create(Korisnik user);
-        void Update(Korisnik user);
-        void Delete(Korisnik user);
-    }
+    
 
     public class KorisnikRepository : IKorisnikRepository
     {
         private readonly DrustvenaMrezaDbContext _context;
+        private readonly IMapper _mapper;
 
         public KorisnikRepository(DrustvenaMrezaDbContext context)
         {
             _context = context;
         }
 
-        public Korisnik GetById(int id)
+        public KorisnikDTO GetById(int id)
         {
-            return _context.Korisnici.Find(id);
+            try
+            {
+                var korisnikEntity = _context.Korisnici.FirstOrDefault(x => x.Id == id);
+                return _mapper.Map<KorisnikDTO>(korisnikEntity);
+            }
+
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
-        public IEnumerable<Korisnik> GetAll()
+        public List<KorisnikDTO> GetAll()
         {
-            return _context.Korisnici.ToList();
+            return _mapper.Map<List<KorisnikDTO>>(_context.Korisnici.ToList());
         }
 
         public void Create(Korisnik user)
@@ -49,6 +54,8 @@ namespace ProjektniZadatak.Repository
             _context.Korisnici.Remove(user);
             _context.SaveChanges();
         }
+
+        
     }
 
 }

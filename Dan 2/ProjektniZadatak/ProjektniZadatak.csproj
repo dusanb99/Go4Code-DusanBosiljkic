@@ -23,10 +23,6 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\LajkKontroller.cs" />
-    <Compile Remove="Services\KomentarService.cs" />
-    <Compile Remove="Services\KorisnikService.cs" />
-    <Compile Remove="Services\LajkService.cs" />
-    <Compile Remove="Services\ObjavaService.cs" />
   </ItemGroup>
 
   <ItemGroup>

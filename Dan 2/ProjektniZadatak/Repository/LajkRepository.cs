@@ -1,36 +1,20 @@
-﻿using ProjektniZadatak.Models;
+﻿using AutoMapper;
+using ProjektniZadatak.Models;
 
 namespace ProjektniZadatak.Repository
 {
-    public interface ILajkRepository
-    {
-        Lajk getById(int id);
-
-        IEnumerable<Lajk> getAll();
-
-        void Create(Lajk lajk);
-
-        void Update(Lajk lajk);
-
-        void Delete(Lajk lajk);
-
-
-
-
-    }
+    
 
     public class LajkRepository : ILajkRepository
     {
         private readonly DrustvenaMrezaDbContext _context;
+        private readonly IMapper _mapper;
         public LajkRepository(DrustvenaMrezaDbContext context)
         {
             _context = context;
         }
 
-        public Lajk getById(int id)
-        {
-            return _context.Lajkovi.Find(id);
-        }
+        
 
         public IEnumerable<Lajk> getAll()
         {

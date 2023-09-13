@@ -2,20 +2,7 @@
 
 namespace ProjektniZadatak.Repository
 {
-    public interface IObjavaRepository
-    {
-        Objava getById(int id);
-
-        IEnumerable<Objava> GetAll();
-
-        void Create(Objava objava);
-
-        void Update(Objava objava);
-
-        void Delete(Objava objava);
-
-
-    }
+    
 
     public class ObjavaRepository : IObjavaRepository
     {
@@ -28,7 +15,17 @@ namespace ProjektniZadatak.Repository
 
         public Objava getById(int id)
         {
-            return _context.Objave.Find(id);
+            try
+            {
+                var result = _context.Objave.FirstOrDefault(x => x.Id == id);
+                return result;
+            }
+
+            catch(Exception ex)
+            {
+                return null;
+            }
+            
         }
 
         public IEnumerable<Objava> GetAll()

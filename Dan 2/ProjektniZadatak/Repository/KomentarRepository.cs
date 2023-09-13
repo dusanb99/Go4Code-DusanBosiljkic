@@ -1,21 +1,9 @@
 ﻿using ProjektniZadatak.Models;
+using ProjektniZadatak.Models.DTO;
 
 namespace ProjektniZadatak.Repository
 {
-    public interface IKomentarRepository
-    {
-        Komentar getById(int id);
-
-        IEnumerable<Komentar> getAll();
-
-        void Create(Komentar komentar);
-
-        void Update(Komentar komentar);
-
-        void Delete(Komentar komentar);
-
-
-    }
+    
 
     public class KomentarRepository : IKomentarRepository
     {
@@ -31,10 +19,7 @@ namespace ProjektniZadatak.Repository
             return _context.Komentari.ToList();
         }
 
-        public Komentar getById(int id)
-        {
-            return _context.Komentari.Find(id);
-        }
+        
 
         public IEnumerable<Komentar> GetAll()
         {

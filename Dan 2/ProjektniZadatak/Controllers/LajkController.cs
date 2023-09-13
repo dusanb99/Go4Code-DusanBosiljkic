@@ -9,9 +9,9 @@ namespace ProjektniZadatak.Controllers
     public class LajkController : ControllerBase
     {
 
-        private readonly ILajkService _lajkService;
+        private readonly LajkService _lajkService;
 
-        public LajkController(ILajkService lajkService) 
+        public LajkController(LajkService lajkService) 
         {
             _lajkService = lajkService;
         }

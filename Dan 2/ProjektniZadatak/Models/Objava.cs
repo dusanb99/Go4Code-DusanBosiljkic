@@ -1,4 +1,5 @@
 ﻿using ProjektniZadatak.Controllers.Model;
+using ProjektniZadatak.Models.DTO;
 
 namespace ProjektniZadatak.Models
 {
@@ -10,7 +11,7 @@ namespace ProjektniZadatak.Models
 
         public int KorisnikId { get; set; }
 
-        public List<Komentar> SviKomentari { get; set; }
+        public List<KomentarDTO> SviKomentari { get; set; }
 
         public Korisnik Autor { get; set; }
 
