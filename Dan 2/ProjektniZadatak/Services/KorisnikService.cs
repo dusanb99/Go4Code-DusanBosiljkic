@@ -1,6 +1,7 @@
 ﻿using ProjektniZadatak.Repository;
 using AutoMapper;
 using ProjektniZadatak.Models.DTO;
+using ProjektniZadatak.Controllers.Model;
 
 namespace ProjektniZadatak.Services
 {
@@ -17,7 +18,16 @@ namespace ProjektniZadatak.Services
                    _mapper = mapper;
             }
 
-            public KorisnikDTO getById(int korisnikId)
+
+        public async Task<KorisniciGetDetailsResponse> CreateAsync(KorisniciCreateRequest korisnik)
+        {
+            var korisnikEntity = _mapper.Map<Korisnik>(korisnik);
+            var result = await _korisnikRepository.Create(korisnikEntity);
+
+            return _mapper.Map<KorisniciGetDetailsResponse>(result);
+        }
+
+        public KorisnikDTO getById(int korisnikId)
             {
                 KorisnikDTO korisnik = _korisnikRepository.GetById(korisnikId);
 
@@ -51,9 +61,10 @@ namespace ProjektniZadatak.Services
 
         }
 
-
-
-
+        public void Update(KorisnikDTO dto)
+        {
+            throw new NotImplementedException();
+        }
     }
     }
 

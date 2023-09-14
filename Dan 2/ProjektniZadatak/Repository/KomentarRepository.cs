@@ -44,5 +44,10 @@ namespace ProjektniZadatak.Repository
             _context.Komentari.Remove(komentar);
             _context.SaveChanges();
         }
+
+        List<KomentarDTO> IKomentarRepository.getAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace ProjektniZadatak.Repository
     {
        
 
-        List<KomentarDTO> getAll();
+        List<Komentar> getAll();
 
         void Create(Komentar komentar);
 

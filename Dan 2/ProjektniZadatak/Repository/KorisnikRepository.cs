@@ -10,36 +10,29 @@ namespace ProjektniZadatak.Repository
     public class KorisnikRepository : IKorisnikRepository
     {
         private readonly DrustvenaMrezaDbContext _context;
-        private readonly IMapper _mapper;
+        public readonly DbSet<Korisnik> _collection;
 
         public KorisnikRepository(DrustvenaMrezaDbContext context)
         {
             _context = context;
         }
 
-        public KorisnikDTO GetById(int id)
+        public async Task<Korisnik> GetById(int id)
         {
-            try
-            {
-                var korisnikEntity = _context.Korisnici.FirstOrDefault(x => x.Id == id);
-                return _mapper.Map<KorisnikDTO>(korisnikEntity);
-            }
-
-            catch (Exception e)
-            {
-                return null;
-            }
+            return await _collection.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public List<KorisnikDTO> GetAll()
+        public async Task<IEnumerable<Korisnik>> GetAll()
         {
-            return _mapper.Map<List<KorisnikDTO>>(_context.Korisnici.ToList());
+            return await _collection.AsNoTracking().ToListAsync();
         }
 
-        public void Create(Korisnik user)
+        public async Task<Korisnik> Create(Korisnik korisnik)
         {
-            _context.Korisnici.Add(user);
-            _context.SaveChanges();
+            await _collection.AddAsync(korisnik);
+            await _context.SaveChangesAsync();
+
+            return korisnik;
         }
 
         public void Update(Korisnik user)
@@ -49,13 +42,16 @@ namespace ProjektniZadatak.Repository
             _context.SaveChanges();
         }
 
-        public void Delete(Korisnik user)
+        public async Task Delete (Korisnik korisnik)
         {
-            _context.Korisnici.Remove(user);
-            _context.SaveChanges();
+            _collection.Remove(korisnik);
+            await _context.SaveChangesAsync();
         }
 
-        
+        public void Update(KorisnikDTO user)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

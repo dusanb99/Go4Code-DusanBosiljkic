@@ -1,4 +1,6 @@
-﻿using ProjektniZadatak.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjektniZadatak.Models;
+using ProjektniZadatak.Models.DTO;
 
 namespace ProjektniZadatak.Repository
 {
@@ -7,6 +9,8 @@ namespace ProjektniZadatak.Repository
     public class ObjavaRepository : IObjavaRepository
     {
         private readonly DrustvenaMrezaDbContext _context;
+
+        public readonly DbSet<Objava> _collection;
 
         public ObjavaRepository(DrustvenaMrezaDbContext context)
         {
@@ -49,6 +53,11 @@ namespace ProjektniZadatak.Repository
         {
             _context.Objave.Update(objava);
             _context.SaveChanges();
+        }
+
+        List<ObjavaDTO> IObjavaRepository.GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

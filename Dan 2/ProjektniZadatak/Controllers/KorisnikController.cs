@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using ProjektniZadatak.Controllers.Model;
 using ProjektniZadatak.Models.DTO;
 using ProjektniZadatak.Repository;
@@ -9,7 +11,7 @@ namespace ProjektniZadatak.Controllers
 
     [ApiController]
 
-    [Route("api/korisnici")]
+    [Route("api/[controller]")]
     public class KorisnikController : ControllerBase
     {
 
@@ -20,9 +22,9 @@ namespace ProjektniZadatak.Controllers
             _korisnikService = korisnikService;
         }
 
-
+        [Authorize(Roles = Roles.Korisnik)]
         [HttpGet]
-        [Route("getAll")]
+        
         public IActionResult getAll()
         {
             IEnumerable<KorisnikDTO> korisnici = _korisnikService.getAll();

@@ -5,10 +5,10 @@ namespace ProjektniZadatak.Repository
 {
     public interface IKorisnikRepository
     {
-        KorisnikDTO GetById(int id);
-        List<KorisnikDTO> GetAll();
-        void Create(Korisnik user);
-        void Update(KorisnikDTO user);
-        void Delete(Korisnik user);
+        public Task<Korisnik> GetById(int id);            
+        void Update(KorisnikDTO user);    
+        public Task<Korisnik> Create(Korisnik korisnik);
+        public Task<IEnumerable<Korisnik>> GetAll();
+        public Task Delete(Korisnik book);
     }
 }
