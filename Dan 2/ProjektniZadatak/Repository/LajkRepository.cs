@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using ProjektniZadatak.Controllers.Model;
 using ProjektniZadatak.Models;
 
 namespace ProjektniZadatak.Repository
@@ -7,36 +9,48 @@ namespace ProjektniZadatak.Repository
 
     public class LajkRepository : ILajkRepository
     {
-        private readonly DrustvenaMrezaDbContext _context;
-        private readonly IMapper _mapper;
+        public readonly DrustvenaMrezaDbContext _context;
+
+        public readonly DbSet<Lajk> _collection;
+
+        
+        
         public LajkRepository(DrustvenaMrezaDbContext context)
         {
             _context = context;
+            _collection = _context.Lajkovi;
         }
 
         
 
-        public IEnumerable<Lajk> getAll()
+        public async Task <Lajk> Get (int id)
         {
-            return _context.Lajkovi.ToList();
+            return await _collection.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public void Create(Lajk lajk)
+        public async Task<IEnumerable<Lajk>> GetAll()
         {
-            _context.Lajkovi.Add(lajk);
-            _context.SaveChanges();
+            return await _collection.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<Lajk> Add(Lajk lajk)
+        {
+            await _collection.AddAsync(lajk);
+            await _context.SaveChangesAsync();
+
+            return lajk;
         }
 
         public void Update(Lajk lajk)
         {
-            _context.Lajkovi.Update(lajk);
+            _context.Lajkovi.Entry(lajk).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
-        public void Delete(Lajk lajk)
+        public async Task Delete(Lajk lajk)
         {
-            _context.Lajkovi.Remove(lajk);
-            _context.SaveChanges();
+            _collection.Remove(lajk);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -15,51 +15,50 @@ namespace ProjektniZadatak.Controllers
     public class KorisnikController : ControllerBase
     {
 
-        private readonly IKorisnikService _korisnikService;
-
-        public KorisnikController(IKorisnikService korisnikService)
+        private readonly IKorisnikService _service;
+        public KorisnikController(IKorisnikService service)
         {
-            _korisnikService = korisnikService;
+            _service = service;
         }
 
-        [Authorize(Roles = Roles.Korisnik)]
+        //[Authorize(Roles = Roles.Korisnik)]
         [HttpGet]
-        
-        public IActionResult getAll()
+        public async Task<ActionResult<IEnumerable<KorisniciGetDetailsResponse>>> Get()
         {
-            IEnumerable<KorisnikDTO> korisnici = _korisnikService.getAll();
-            return Ok(korisnici);
+            var result = await _service.GetAsync();
+            return Ok(result);
         }
 
-        [HttpGet]
-        [Route("getById/{id}")]
-
-        public IActionResult getById(int id)
+        //[Authorize(Roles = Roles.Korisnik)]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<KorisniciGetDetailsResponse>> GetDetails(int id)
         {
-            KorisnikDTO korisnik = _korisnikService.getById(id);
-            if (korisnik == null)
-            {
-                return null;
-            }
-            return Ok(korisnik);
+            var result = await _service.GetDetailsAsync(id);
+
+            return result is null ? NotFound() : Ok(result);
         }
 
-        [HttpPut]
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] KorisnikDTO korisnik)
+        //[Authorize(Roles = Roles.Admin)]
+        [HttpPost]
+        public async Task<ActionResult<KorisniciGetDetailsResponse>> Post(KorisniciCreateRequest book)
         {
-            if (id != korisnik.id)
-            {
-                return BadRequest();
-            }
+            var result = await _service.CreateAsync(book);
 
-            _korisnikService.Update(korisnik);
-            return NoContent();
+            return CreatedAtAction(nameof(GetDetails), new { id = result.Id }, result);
         }
 
-        
+        //[Authorize(Roles = Roles.Admin)]
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var result = await _service.DeleteAsync(id);
 
+            return result == false ? NotFound() : NoContent();
+        }
     }
 
+
 }
+
+
 

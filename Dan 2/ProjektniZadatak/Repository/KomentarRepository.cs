@@ -1,4 +1,6 @@
-﻿using ProjektniZadatak.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjektniZadatak.Controllers.Model;
+using ProjektniZadatak.Models;
 using ProjektniZadatak.Models.DTO;
 
 namespace ProjektniZadatak.Repository
@@ -9,45 +11,48 @@ namespace ProjektniZadatak.Repository
     {
         private readonly DrustvenaMrezaDbContext _context;
 
-        public KomentarRepository(DrustvenaMrezaDbContext context)
+        public readonly DbSet<Komentar> _collection;
+
+        public KomentarRepository(DrustvenaMrezaDbContext context, DbSet<Komentar> collection)
         {
             _context = context;
+            _collection = collection;
         }
 
-        public IEnumerable<Komentar> getAll()
+
+
+        public async Task<IEnumerable<Komentar>> GetAll()
         {
-            return _context.Komentari.ToList();
+            return await _collection.AsNoTracking().ToListAsync();
         }
 
-        
-
-        public IEnumerable<Komentar> GetAll()
+        public async Task<Komentar> Get(int id)
         {
-            return _context.Komentari.ToList();
+            return await _collection.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public void Create(Komentar komentar)
+        public async Task<Komentar> Create(Komentar komentar)
         {
-            _context.Komentari.Add(komentar);
-            _context.SaveChanges();
+            await _collection.AddAsync(komentar);
+            await _context.SaveChangesAsync();
+
+            return komentar;
         }
 
         public void Update(Komentar komentar)
         {
-            _context.Komentari.Update(komentar);
+            _context.Komentari.Entry(komentar).State = EntityState.Modified;
+            //ovo gore je dosta cistije, update ako entitet ne postoji pokusa da ga unese..  _context.Korisnici.Update(user);
             _context.SaveChanges();
         }
 
 
-        public void Delete(Komentar komentar)
+        public async Task Delete(Komentar komentar)
         {
-            _context.Komentari.Remove(komentar);
-            _context.SaveChanges();
+            _collection.Remove(komentar);
+            await _context.SaveChangesAsync();
         }
 
-        List<KomentarDTO> IKomentarRepository.getAll()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

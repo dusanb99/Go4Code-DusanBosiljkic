@@ -1,19 +1,16 @@
-﻿using ProjektniZadatak.Models;
+﻿using ProjektniZadatak.Controllers.Model;
+using ProjektniZadatak.Models;
 using ProjektniZadatak.Models.DTO;
 
 namespace ProjektniZadatak.Repository
 {
     public interface IKomentarRepository
     {
-       
 
-        List<Komentar> getAll();
-
-        void Create(Komentar komentar);
-
-        void Update(Komentar komentar);
-
-        void Delete(Komentar komentar);
+        public Task<Komentar> Get(int id);
+        public Task<Komentar> Create(Komentar komentar);
+        public Task<IEnumerable<Komentar>> GetAll();
+        public Task Delete(Komentar komentar);
 
 
     }

@@ -1,6 +1,6 @@
 ﻿namespace ProjektniZadatak.Models.DTO
 {
-    public class ObjavaDTO
+    public class ObavestenjeGetDetailsResponse
     {
     }
 }

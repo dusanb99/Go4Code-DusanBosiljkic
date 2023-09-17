@@ -4,9 +4,9 @@ namespace ProjektniZadatak.Services
 {
     public interface IKorisnikService
     {
-        KorisnikDTO getById(int id);
-        List<KorisnikDTO> getAll();
-
-        void Update(KorisnikDTO dto);
+        public  Task<KorisniciGetDetailsResponse> CreateAsync(KorisniciCreateRequest korisnik);
+        public Task<IEnumerable<KorisniciGetDetailsResponse>> GetAsync();
+        public Task<KorisniciGetDetailsResponse> GetDetailsAsync(int id);
+        public Task<bool> DeleteAsync(int id);
     }
 }

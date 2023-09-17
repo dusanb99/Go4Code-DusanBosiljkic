@@ -6,12 +6,14 @@ namespace ProjektniZadatak.Models
     {
         public int Id { get; set; }
 
-
-        [MaxLength(200)]
         public string Tekst { get; set; }
 
-        public int objavaId { get; set; }
+        public int ObjavaId { get; set; }
 
-        public Objava PovezanaObjava { get; set; }
+        public Objava Objava { get; set; }
+
+        public List<Lajk> KomentarLajkovi { get; set; } // Lista lajkova povezanih sa ovim komentarom
+
+
     }
 }

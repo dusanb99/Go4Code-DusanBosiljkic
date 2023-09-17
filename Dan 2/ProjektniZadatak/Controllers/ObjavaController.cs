@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjektniZadatak.Models.DTO;
 using ProjektniZadatak.Services;
 
 namespace ProjektniZadatak.Controllers
@@ -7,11 +8,45 @@ namespace ProjektniZadatak.Controllers
     [Route("api/objava")]
     public class ObjavaController : ControllerBase
     {
-        private readonly IObjavaService _objavaService;
+        private readonly IObjavaService _service;
 
-        public ObjavaController(IObjavaService objavaService)
+        public ObjavaController(IObjavaService service)
         {
-            _objavaService = objavaService;
+            _service = service;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ObjaveGetDetailsResponse>>> Get()
+        {
+            var result = await _service.GetAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ObjaveGetDetailsResponse>> GetDetails(int id)
+        {
+            var result = await _service.GetDetailsAsync(id);
+
+            return result is null ? NotFound() : Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ObjaveGetDetailsResponse>> Post(ObjaveCreateRequest objava)
+        {
+            var result = await _service.CreateAsync(objava);
+
+            return CreatedAtAction(nameof(GetDetails), new { id = result.Id }, result);
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var result = await _service.DeleteAsync(id);
+
+            return result ? NoContent() : NotFound();
         }
     }
 }
+
+

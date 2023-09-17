@@ -6,15 +6,15 @@ namespace ProjektniZadatak.Models
     public class Objava
     {
         public int Id { get; set; }
+        
+        public string Naslov { get; set; }
 
         public string Tekst { get; set; }
+        
+        public List<Komentar> Komentari { get; set; }
 
-        public int KorisnikId { get; set; }
+        public List<Lajk> Lajkovi { get; set; }
 
-        public List<KomentarDTO> SviKomentari { get; set; }
-
-        public Korisnik Autor { get; set; }
-
-        public List<Lajk> SviLajkovi { get; set; }
+        
     }
 }

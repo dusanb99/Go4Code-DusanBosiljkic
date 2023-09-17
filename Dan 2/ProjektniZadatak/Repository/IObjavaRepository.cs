@@ -1,19 +1,15 @@
-﻿using ProjektniZadatak.Models;
+﻿using ProjektniZadatak.Controllers.Model;
+using ProjektniZadatak.Models;
 using ProjektniZadatak.Models.DTO;
 
 namespace ProjektniZadatak.Repository
 {
     public interface IObjavaRepository
     {
-        Objava getById(int id);
-
-        List<ObjavaDTO> GetAll();
-
-        void Create(Objava objava);
-
-        void Update(Objava objava);
-
-        void Delete(Objava objava);
+        public Task<Objava> Get(int id);
+        public Task<Objava> Create(Objava objava);
+        public Task<IEnumerable<Objava>> GetAll();
+        public Task Delete(Objava objava);
 
 
     }

@@ -9,15 +9,16 @@ namespace ProjektniZadatak.Repository
 
     public class KorisnikRepository : IKorisnikRepository
     {
-        private readonly DrustvenaMrezaDbContext _context;
+        public readonly DrustvenaMrezaDbContext _context;
         public readonly DbSet<Korisnik> _collection;
 
         public KorisnikRepository(DrustvenaMrezaDbContext context)
         {
             _context = context;
+            _collection = _context.Korisnici;
         }
 
-        public async Task<Korisnik> GetById(int id)
+        public async Task<Korisnik> Get(int id)
         {
             return await _collection.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
@@ -27,7 +28,7 @@ namespace ProjektniZadatak.Repository
             return await _collection.AsNoTracking().ToListAsync();
         }
 
-        public async Task<Korisnik> Create(Korisnik korisnik)
+        public async Task<Korisnik> Add(Korisnik korisnik)
         {
             await _collection.AddAsync(korisnik);
             await _context.SaveChangesAsync();
@@ -38,7 +39,8 @@ namespace ProjektniZadatak.Repository
         public void Update(Korisnik user)
         {
             _context.Korisnici.Entry(user).State = EntityState.Modified;
-            //ovo gore je dosta cistije, update ako entitet ne postoji pokusa da ga unese..  _context.Korisnici.Update(user);
+            //ovo gore je dosta cistije, update ako entitet ne postoji pokusa da ga unese..
+            //_context.Korisnici.Update(user);
             _context.SaveChanges();
         }
 
@@ -48,10 +50,7 @@ namespace ProjektniZadatak.Repository
             await _context.SaveChangesAsync();
         }
 
-        public void Update(KorisnikDTO user)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 
 }

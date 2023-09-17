@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using ProjektniZadatak.Models;
 using ProjektniZadatak.Models.DTO;
 using ProjektniZadatak.Repository;
 
 namespace ProjektniZadatak.Services
 {
-    public class ObjavaService
+    public class ObjavaService : IObjavaService
     {
         private readonly IObjavaRepository _objavaRepository;
 
@@ -17,22 +18,42 @@ namespace ProjektniZadatak.Services
             _mapper = mapper;
         }
 
-        public ObjavaDTO getById(int id)
+        public async Task<ObjaveGetDetailsResponse> CreateAsync(ObjaveCreateRequest objava) 
         {
-            var objavaEntity = _objavaRepository.getById(id);
+            var objavaEntity = _mapper.Map<Objava>(objava);
+            var result = await _objavaRepository.Create(objavaEntity);
 
-            if (objavaEntity == null)
+            return _mapper.Map<ObjaveGetDetailsResponse>(result);
+
+        }
+
+        public async Task<bool> DeleteAsync (int id)
+        {
+            var exists = await _objavaRepository.Get(id);
+
+            if (exists == null)
+            {
+                return false;
+            }
+            await _objavaRepository.Delete(exists);
+            return true;
+        }
+
+        public async Task<IEnumerable<ObjaveGetDetailsResponse>> GetAsync ()
+        {
+          var objave =  await _objavaRepository.GetAll();
+
+            return _mapper.Map<IEnumerable<ObjaveGetDetailsResponse>>(objave);
+        }
+
+        public async Task<ObjaveGetDetailsResponse> GetDetailsAsync (int id)
+        {
+            var objava = await _objavaRepository.Get(id);
+            if (objava == null)
             {
                 return null;
             }
-
-            var objavaDTO = _mapper.Map<ObjavaDTO>(objavaEntity);
-            return objavaDTO;
-        }
-
-        public List<ObjavaDTO> getAll()
-        {
-            return _objavaRepository.GetAll();
+            return _mapper.Map<ObjaveGetDetailsResponse>(objava);
         }
     }
 }

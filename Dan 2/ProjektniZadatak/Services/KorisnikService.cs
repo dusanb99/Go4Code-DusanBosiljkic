@@ -22,49 +22,50 @@ namespace ProjektniZadatak.Services
         public async Task<KorisniciGetDetailsResponse> CreateAsync(KorisniciCreateRequest korisnik)
         {
             var korisnikEntity = _mapper.Map<Korisnik>(korisnik);
-            var result = await _korisnikRepository.Create(korisnikEntity);
+            var result = await _korisnikRepository.Add(korisnikEntity);
 
             return _mapper.Map<KorisniciGetDetailsResponse>(result);
         }
 
-        public KorisnikDTO getById(int korisnikId)
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var exists = await _korisnikRepository.Get(id);
+
+            if (exists == null)
             {
-                KorisnikDTO korisnik = _korisnikRepository.GetById(korisnikId);
-
-                if (korisnik == null)
-                {
-                    return null;
-                }
-
-                return korisnik;
-                
+                return false;
             }
 
-        public List<KorisnikDTO> getAll()
-        {
-            return _korisnikRepository.GetAll();
+            await _korisnikRepository.Delete(exists);
+
+            return true;
         }
 
-        public void update(KorisnikDTO korisnik)
+        public async Task<IEnumerable<KorisniciGetDetailsResponse>> GetAsync()
         {
-            var postojeciKorisnik = _korisnikRepository.GetById(korisnik.id);
+            var korisnici = await _korisnikRepository.GetAll();
 
-            if (postojeciKorisnik == null)
+            return _mapper.Map<IEnumerable<KorisniciGetDetailsResponse>>(korisnici);
+        }
+
+        public async Task<KorisniciGetDetailsResponse> GetDetailsAsync(int id)
+        {
+            var korisnik = await _korisnikRepository.Get(id);
+
+            if (korisnik == null)
             {
-                return;
+                return null;
             }
-
-            postojeciKorisnik.ime = korisnik.ime;
-
-            _korisnikRepository.Update(postojeciKorisnik);
-            
-
+            return _mapper.Map<KorisniciGetDetailsResponse>(korisnik);
         }
 
-        public void Update(KorisnikDTO dto)
-        {
-            throw new NotImplementedException();
-        }
+        
+
+        
+
+        
+
+        
     }
     }
 

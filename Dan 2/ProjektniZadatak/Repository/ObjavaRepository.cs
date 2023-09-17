@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjektniZadatak.Models;
 using ProjektniZadatak.Models.DTO;
+using System.Diagnostics.Contracts;
 
 namespace ProjektniZadatak.Repository
 {
@@ -15,49 +16,40 @@ namespace ProjektniZadatak.Repository
         public ObjavaRepository(DrustvenaMrezaDbContext context)
         {
             _context = context;
+
+            _collection = _context.Objave;
         }
 
-        public Objava getById(int id)
+        public async Task<Objava> Get (int id)
         {
-            try
-            {
-                var result = _context.Objave.FirstOrDefault(x => x.Id == id);
-                return result;
-            }
-
-            catch(Exception ex)
-            {
-                return null;
-            }
-            
+            return await _collection.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public IEnumerable<Objava> GetAll()
+        public async Task<IEnumerable<Objava>> GetAll ()
         {
-            return _context.Objave.ToList();
+            return await _collection.AsNoTracking().ToListAsync();
         }
 
-        public void Create(Objava objava)
+        public async Task<Objava> Create (Objava objava)
         {
-            _context.Objave.Add(objava);
-            _context.SaveChanges();
+            await _collection.AddAsync(objava);
+            await _context.SaveChangesAsync();
+
+            return objava;
         }
 
-        public void Delete(Objava objava)
+        public async Task Delete(Objava objava)
         {
-            _context?.Objave.Remove(objava);
-            _context.SaveChanges();
+            _collection.Remove(objava);
+            await _context.SaveChangesAsync();
         }
 
         public void Update(Objava objava)
         {
-            _context.Objave.Update(objava);
+            _context.Objave.Entry(objava).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
-        List<ObjavaDTO> IObjavaRepository.GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
