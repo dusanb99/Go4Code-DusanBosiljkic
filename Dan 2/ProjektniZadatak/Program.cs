@@ -5,8 +5,8 @@ using ProjektniZadatak.Repository;
 using ProjektniZadatak.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
-
-
+using ProjektniZadatak.Controllers.Model;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,8 +58,9 @@ builder.Services.AddSwaggerGen(c =>
 
 // Identity
 //builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-//    .AddEntityFrameworkStores<DrustvenaMrezaDbContext>()
-//    .AddDefaultTokenProviders();
+    //AddEntityFrameworkStores<AppDbContext>()
+    //.AddDefaultTokenProviders();
+
 
 
 
@@ -79,7 +80,7 @@ builder.Services.AddScoped<IObavestenjeRepository, ObavestenjeRepository>();
 builder.Services.AddScoped<IObavestenjeService, ObavestenjeService>();
 
 builder.Services.AddScoped<IKomentarRepository, KomentarRepository>(); // ovde puca .build
-builder.Services.AddScoped<IKomentarService, KomentarService>();
+//builder.Services.AddScoped<IKomentarService, KomentarService>();
 
 
 

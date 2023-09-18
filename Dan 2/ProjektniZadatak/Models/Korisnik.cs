@@ -1,4 +1,5 @@
-﻿using ProjektniZadatak.Models;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using ProjektniZadatak.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace ProjektniZadatak.Controllers.Model
