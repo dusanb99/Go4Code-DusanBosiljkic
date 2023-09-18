@@ -1,4 +1,6 @@
-﻿using ProjektniZadatak.Models.DTO;
+﻿using ProjektniZadatak.Controllers.Model;
+using ProjektniZadatak.Models;
+using ProjektniZadatak.Models.DTO;
 
 namespace ProjektniZadatak.Services
 {
@@ -8,5 +10,7 @@ namespace ProjektniZadatak.Services
         public Task<IEnumerable<KorisniciGetDetailsResponse>> GetAsync();
         public Task<KorisniciGetDetailsResponse> GetDetailsAsync(int id);
         public Task<bool> DeleteAsync(int id);
+
+        Task<Korisnik> UpdateAsync(int id, KorisniciCreateRequest updatedKorisnik);
     }
 }

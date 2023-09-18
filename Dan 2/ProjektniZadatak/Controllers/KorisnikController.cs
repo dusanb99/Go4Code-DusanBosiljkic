@@ -55,6 +55,19 @@ namespace ProjektniZadatak.Controllers
 
             return result == false ? NotFound() : NoContent();
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Korisnik>> Put(int id, KorisniciCreateRequest updatedKorisnik)
+        {
+            var result = await _service.UpdateAsync(id, updatedKorisnik);
+
+            if (result == null)
+            {
+                return NotFound(); // Korisnik sa datim ID-om nije pronađen
+            }
+
+            return Ok(result); // Vratite ažuriranog korisnika
+        }
     }
 
 

@@ -55,5 +55,33 @@ namespace ProjektniZadatak.Services
             }
             return _mapper.Map<ObjaveGetDetailsResponse>(objava);
         }
+
+        public async Task<Objava> UpdateAsync(int id, ObjaveCreateRequest updatedObjava)
+        {
+            // Prvo proverite da li objava sa datim ID-om postoji
+            var existingObjava = await _objavaRepository.Get(id);
+
+            if (existingObjava == null)
+            {
+                return null; // Objava sa datim ID-om nije pronađena
+            }
+
+            // Ažurirajte postojeću objavu sa podacima iz updatedObjava
+            existingObjava.Naslov = updatedObjava.Naslov;
+            existingObjava.Tekst = updatedObjava.Tekst;
+            // Dodajte ostala polja koja želite ažurirati
+
+            // Pozovite metodu za ažuriranje u repozitorijumu da sačuvate promene u skladištu podataka
+            var updatedObjavaInRepo = await _objavaRepository.UpdateAsync(id, existingObjava);
+
+            if (updatedObjavaInRepo == null)
+            {
+                // Repozitorijum nije uspeo ažurirati objavu
+                // Možete ovde obraditi ovu situaciju po potrebi
+                return null;
+            }
+
+            return updatedObjavaInRepo; // Vratite ažuriranu objavu
+        }
     }
 }

@@ -44,12 +44,24 @@ namespace ProjektniZadatak.Repository
             await _context.SaveChangesAsync();
         }
 
-        public void Update(Objava objava)
+        public async Task<Objava> UpdateAsync(int id, Objava updatedObjava)
         {
-            _context.Objave.Entry(objava).State = EntityState.Modified;
-            _context.SaveChanges();
+            var existingObjava = await _context.Objave.FindAsync(id);
+
+            if (existingObjava == null)
+            {
+                return null; // Objava sa datim ID-om nije pronađena
+            }
+
+            // Ažurirajte polja objave prema updatedObjava
+            existingObjava.Naslov = updatedObjava.Naslov;
+            existingObjava.Tekst = updatedObjava.Tekst;
+            // Dodajte ostala polja koja želite ažurirati
+
+            await _context.SaveChangesAsync();
+            return existingObjava; // Vratite ažuriranu objavu
         }
 
-        
+
     }
 }

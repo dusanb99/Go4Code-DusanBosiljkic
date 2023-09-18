@@ -1,6 +1,7 @@
 ﻿using ProjektniZadatak.Controllers.Model;
 using ProjektniZadatak.Models;
 using ProjektniZadatak.Models.DTO;
+using System.Threading.Tasks;
 
 namespace ProjektniZadatak.Repository
 {
@@ -10,6 +11,8 @@ namespace ProjektniZadatak.Repository
         public Task<Objava> Create(Objava objava);
         public Task<IEnumerable<Objava>> GetAll();
         public Task Delete(Objava objava);
+
+        public Task<Objava> UpdateAsync(int id, Objava updatedObjava);
 
 
     }

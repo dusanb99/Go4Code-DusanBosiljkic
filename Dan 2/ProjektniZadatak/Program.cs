@@ -57,9 +57,12 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // Identity
-//builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    //AddEntityFrameworkStores<AppDbContext>()
-    //.AddDefaultTokenProviders();
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>() // ovo je jako bitno..
+//AddEntityFrameworkStores<AppDbContext>()
+//.AddDefaultTokenProviders();
+
+
+
 
 
 
@@ -79,7 +82,7 @@ builder.Services.AddScoped<IPratilacService, PratilacService>();
 builder.Services.AddScoped<IObavestenjeRepository, ObavestenjeRepository>();
 builder.Services.AddScoped<IObavestenjeService, ObavestenjeService>();
 
-builder.Services.AddScoped<IKomentarRepository, KomentarRepository>(); // ovde puca .build
+//builder.Services.AddScoped<IKomentarRepository, KomentarRepository>(); // ovde puca .build
 //builder.Services.AddScoped<IKomentarService, KomentarService>();
 
 

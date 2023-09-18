@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ProjektniZadatak.Controllers.Model
 {
-    public class Korisnik
+    public class Korisnik 
     {
 
         public int Id { get; set; }

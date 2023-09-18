@@ -59,13 +59,41 @@ namespace ProjektniZadatak.Services
             return _mapper.Map<KorisniciGetDetailsResponse>(korisnik);
         }
 
-        
+        public async Task<Korisnik> UpdateAsync(int id, KorisniciCreateRequest updatedKorisnik)
+        {
+            // Prvo proverite da li korisnik sa datim ID-om postoji
+            var existingKorisnik = await _korisnikRepository.Get(id);
 
-        
+            if (existingKorisnik == null)
+            {
+                return null; // Korisnik sa datim ID-om nije pronađen
+            }
 
-        
+            // Ažurirajte postojećeg korisnika sa podacima iz updatedKorisnik
+            existingKorisnik.Ime = updatedKorisnik.Ime;
+            existingKorisnik.Prezime = updatedKorisnik.Prezime;
+            // Dodajte ostala polja korisnika koja želite ažurirati
 
-        
+            // Pozovite metodu za ažuriranje u repozitorijumu za korisnike da sačuvate promene u skladištu podataka
+            var updatedKorisnikInRepo = await _korisnikRepository.UpdateAsync(id, existingKorisnik);
+
+            if (updatedKorisnikInRepo == null)
+            {
+                // Repozitorijum za korisnike nije uspeo ažurirati korisnika
+                // Možete ovde obraditi ovu situaciju po potrebi
+                return null;
+            }
+
+            return updatedKorisnikInRepo; // Vratite ažuriranog korisnika
+        }
+
+
+
+
+
+
+
+
     }
     }
 

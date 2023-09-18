@@ -46,6 +46,14 @@ namespace ProjektniZadatak.Controllers
 
             return result ? NoContent() : NotFound();
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ObjaveGetDetailsResponse>> Put(int id, ObjaveCreateRequest objava)
+        {
+            var result = await _service.UpdateAsync(id, objava);
+
+            return result is null ? NotFound() : Ok(result);
+        }
     }
 }
 

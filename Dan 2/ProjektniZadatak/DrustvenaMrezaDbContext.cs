@@ -11,7 +11,7 @@ namespace ProjektniZadatak
     {
 
 
-        public DrustvenaMrezaDbContext(DbContextOptions<DrustvenaMrezaDbContext> options) : base(options) {}
+       public DrustvenaMrezaDbContext(DbContextOptions<DrustvenaMrezaDbContext> options) : base(options) {}
 
        public DbSet<Korisnik> Korisnici { get; set; }
 

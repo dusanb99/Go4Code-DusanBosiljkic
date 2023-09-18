@@ -36,12 +36,24 @@ namespace ProjektniZadatak.Repository
             return korisnik;
         }
 
-        public void Update(Korisnik user)
+        public async Task<Korisnik> UpdateAsync(int id, Korisnik updatedKorisnik)
         {
-            _context.Korisnici.Entry(user).State = EntityState.Modified;
-            //ovo gore je dosta cistije, update ako entitet ne postoji pokusa da ga unese..
-            //_context.Korisnici.Update(user);
-            _context.SaveChanges();
+            var existingKorisnik = await _context.Korisnici.FindAsync(id);
+
+            if (existingKorisnik == null)
+            {
+                return null; // Korisnik sa datim ID-om nije pronađen
+            }
+
+            // Ažurirajte polja korisnika prema updatedKorisnik
+            existingKorisnik.Ime = updatedKorisnik.Ime;
+            existingKorisnik.Prezime = updatedKorisnik.Prezime;
+            // Dodajte ostala polja koja želite ažurirati
+
+            // Sačuvajte promene u bazi podataka
+            await _context.SaveChangesAsync();
+
+            return existingKorisnik; // Vratite ažuriranog korisnika
         }
 
         public async Task Delete (Korisnik korisnik)
