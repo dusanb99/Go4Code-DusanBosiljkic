@@ -1,13 +1,5 @@
-<app-create-korisnik (addKorisnikEventEmitter)="onKorisnikAdded($event)"></app-create-korisnik>
-<div *ngFor="let korisnikElement of korisnici">
-  <app-korisnik [korisnik]="korisnikElement"></app-korisnik>
-</div>
+<app-korisnik></app-korisnik>
 
-
-
-<app-create-objava (addObjavaEventEmitter)="onObjavaAdded($event)"></app-create-objava>
-<div *ngFor="let objavaElement of objave">
-  <app-objava [objava]="objavaElement"></app-objava>
-</div>
+<app-create-objava></app-create-objava>
 
 

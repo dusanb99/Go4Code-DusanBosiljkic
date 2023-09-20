@@ -13,6 +13,10 @@ import { FormsModule } from '@angular/forms';
 import { ObjavaComponent } from './objava/objava.component';
 import { CreateObjavaComponent } from './create-objava/create-objava.component';
 
+import {MatCardModule} from '@angular/material/card';
+
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +31,9 @@ import { CreateObjavaComponent } from './create-objava/create-objava.component';
     AppRoutingModule,
     CommonModule,
     MatButtonModule,
-    FormsModule
+    FormsModule,
+    MatCardModule,
+    HttpClientModule
     
   ],
   providers: [],

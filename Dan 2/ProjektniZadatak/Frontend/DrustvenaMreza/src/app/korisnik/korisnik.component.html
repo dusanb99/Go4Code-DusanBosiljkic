@@ -1,3 +1,11 @@
-<div>
-{{korisnik.ime}}, {{korisnik.prezime}}, {{korisnik.email}}, {{korisnik.username}},{{korisnik.password}}
-</div>
+<p>Svi korisnici na jednom mestu...</p>
+
+<mat-card *ngFor="let korisnik of korisnici">
+  <mat-card-header>
+    <mat-card-subtitle>{{ korisnik.ime}} {{ korisnik.prezime}}</mat-card-subtitle>
+    <mat-card-title>{{korisnik.username}} {{korisnik.email}} {{korisnik.password}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    
+  </mat-card-content>
+</mat-card>

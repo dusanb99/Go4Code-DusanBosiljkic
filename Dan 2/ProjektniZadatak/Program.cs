@@ -8,11 +8,15 @@ using Microsoft.OpenApi.Models;
 using ProjektniZadatak.Controllers.Model;
 using System;
 
+
+string _cors = "cors";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+
 
 
 builder.Services.AddDbContext<DrustvenaMrezaDbContext>(options =>
@@ -56,10 +60,20 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: _cors, builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
+
 // Identity
 //builder.Services.AddIdentity<IdentityUser, IdentityRole>() // ovo je jako bitno..
 //AddEntityFrameworkStores<AppDbContext>()
 //.AddDefaultTokenProviders();
+
 
 
 
@@ -102,7 +116,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors(_cors);
 app.UseAuthorization();
 
 app.MapControllers();

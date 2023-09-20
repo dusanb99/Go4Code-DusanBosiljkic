@@ -63,6 +63,7 @@
             "production": {
               "browserTarget": "DrustvenaMreza:build:production"
             },
+            
             "development": {
               "browserTarget": "DrustvenaMreza:build:development"
             }
